@@ -10,6 +10,7 @@ from enable.api import KeySpec
 
 # Chaco imports
 from chaco.api import AbstractController
+from numpy.core.numeric import zeros_like
 
 
 class RangeSelection(AbstractController):
@@ -256,10 +257,10 @@ class RangeSelection(AbstractController):
                     self.selecting_mouse_move(event)
                 #elif self.allow_deselection:
                 #    self.deselect(event)
-                else:
+#                else:
                     # Treat this as a combination deselect + right down
-                    self.deselect(event)
-                    self.normal_right_down(event)
+#                    self.deselect(event)
+#                    self.normal_right_down(event)
         else:
             # Treat this as a combination deselect + right down
             self.deselect(event)
@@ -592,7 +593,8 @@ class RangeSelection(AbstractController):
             selection_masks = \
                 datasource.metadata.setdefault(self.mask_metadata_name, [])
             for index in range(len(selection_masks)):
-                if id(selection_masks[index]) == id(self._selection_mask):
+#                if id(selection_masks[index]) == id(self._selection_mask):
+                if True:
                     del selection_masks[index]
                     break
 
@@ -606,7 +608,16 @@ class RangeSelection(AbstractController):
                 new_mask = (data_pts >= low) & (data_pts <= high)
                 selection_masks.append(new_mask)
                 self._selection_mask = new_mask
+            else:
+                # Set the selection mask to false.
+                data_pts = datasource.get_data()
+                new_mask = zeros_like(data_pts,dtype=bool)
+                selection_masks.append(new_mask)
+                self._selection_mask = new_mask
+
+                
             datasource.metadata_changed = {self.mask_metadata_name: val}
+        
 
         self.trait_property_changed("selection", oldval, val)
 
