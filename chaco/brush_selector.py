@@ -22,7 +22,7 @@ class BrushSelector(AbstractBrushSelector):
         # If this is the first data source to be added, create the mask.
         if len(self.subscribed_data) == 0:
             #Create a mask with all values set to False
-            mask = np.zeros(source.get_size,bool)
+            mask = np.zeros(source.get_size(),bool)
             source.metadata[self.metadata_name] = mask 
             self.subscribed_data.append(source)
         else:
@@ -46,3 +46,4 @@ class BrushSelector(AbstractBrushSelector):
         """
         for data_source in [source for source in self.subscribed_data if source is not changed_object]:
             data_source.metadata[self.metadata_name] = changed_object.metadata[self.metadata_name]
+    
