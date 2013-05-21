@@ -89,13 +89,13 @@ def render_markers(gc, points, marker, marker_size,
     # Support specifiying color and outline color as with size.
     if isinstance(color, ndarray):
         if point_mask is not None:
-            color = color[point_mask]
+            color = color
     else:
         color = itertools.repeat(color)
 
     if isinstance(outline_color, ndarray):
         if point_mask is not None:
-            outline_color = outline_color[point_mask]
+            outline_color = outline_color
     else:
         outline_color = itertools.repeat(outline_color)
                 
