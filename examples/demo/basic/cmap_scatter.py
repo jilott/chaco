@@ -12,7 +12,7 @@ Left-click in the color bar to cancel the range selection.
 # Major library imports
 from numpy import exp, sort
 from numpy.random import random
-
+import numpy as np
 # Enthought library imports
 from enable.api import Component, ComponentEditor, Window
 from traits.api import HasTraits, Instance
@@ -24,6 +24,7 @@ from chaco.api import ArrayPlotData, ColorBar, \
                                  jet, LinearMapper, Plot
 from chaco.tools.api import PanTool, ZoomTool, RangeSelection, \
                                        RangeSelectionOverlay
+from traits.trait_types import Button
 
 #===============================================================================
 # # Create the Chaco plot.
@@ -112,18 +113,25 @@ title="Colormapped scatter plot"
 #===============================================================================
 class Demo(HasTraits):
     plot = Instance(Component)
-
+    select_button = Button(label='Select')
     traits_view = View(
                     VGroup(
                         Label('Right-drag on colorbar to select data range'),
                         Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
-                        ),
+                        Item('select_button',
+                             show_label=False)),                       
                     resizable=True, 
                     title=title
                     )
     def _plot_default(self):
          return _create_plot_component()
+    
+    def _select_button_fired(self,event):
+        renderer = self.plot._components[0]._components[0]
+        data_source = renderer.color_data
+        data_source.metadata['selection_masks'] = np.ones(data_source.get_size())
+        print "select button"      
 
 demo = Demo()
 
