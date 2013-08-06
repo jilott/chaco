@@ -18,11 +18,19 @@ from kiva.pdf import GraphicsContext
 PAGE_DPI = 72.0
 
 PAGE_SIZE_MAP = {
+<<<<<<< HEAD
         "letter": letter,
         "A4": A4,
         "landscape_letter":landscape(letter),
         "landscape_A4":landscape(A4)
         }
+=======
+    "letter": letter,
+    "A4": A4,
+    "landscape_letter": landscape(letter),
+    "landscape_A4": landscape(A4)
+}
+>>>>>>> 08a9ad0ef76ba1d4b8d1eb5e03165d32d4c7779a
 
 UNITS_MAP = {
     "inch": inch,
